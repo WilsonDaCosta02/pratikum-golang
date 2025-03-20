@@ -1,4 +1,130 @@
+basePath: /
+definitions:
+  main.User:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+      age:
+        type: integer
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:3000
 info:
   contact: {}
-paths: {}
+  description: API untuk mengelola data pengguna
+  title: OpenAPI User Service
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: Mendapatkan daftar semua pengguna
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Menambahkan pengguna baru ke database
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Menghapus pengguna berdasarkan ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete user
+      tags:
+      - users
+    get:
+      description: Mendapatkan data pengguna berdasarkan ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.User'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get user by ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Memperbarui data pengguna berdasarkan ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update user
+      tags:
+      - users
 swagger: "2.0"
